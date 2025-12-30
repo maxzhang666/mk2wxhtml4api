@@ -28,6 +28,7 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 config.local.json
+*.local.json
 
 # Dependency Directories (Common)
 node_modules/
@@ -48,3 +49,4 @@ coverage/
 .nuxt/
 .cache/
 tmp/
+temp/
