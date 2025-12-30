@@ -1,23 +1,23 @@
-# Markdown to WeChat HTML API Documentation
+# Markdown 转微信公众号 HTML API 文档
 
-## Overview
+## 概述
 
-This API converts Markdown text into HTML formatted for WeChat Official Account articles.
+本 API 将 Markdown 文本转换为适用于微信公众号文章的 HTML 格式。
 
-**Base URL:** `http://localhost:3000`
+**基础 URL:** `http://localhost:3000`
 
-## Endpoints
+## 接口列表
 
-### Health Check
+### 健康检查
 
-Check if the API server is running.
+检查 API 服务器是否正常运行。
 
-**Request:**
+**请求:**
 ```
 GET /health
 ```
 
-**Response (200 OK):**
+**响应 (200 OK):**
 ```json
 {
   "status": "ok",
@@ -25,48 +25,48 @@ GET /health
 }
 ```
 
-### Convert Markdown to WeChat HTML
+### 转换 Markdown 为微信公众号 HTML
 
-Convert Markdown text to WeChat-compatible HTML.
+将 Markdown 文本转换为微信公众号兼容的 HTML。
 
-**Request:**
+**请求:**
 ```
 POST /api/convert/wechat
 Content-Type: application/json
 ```
 
-**Request Body:**
+**请求体:**
 ```json
 {
   "markdown": "# Hello World\n\nThis is **bold** text.",
-  "title": "Optional Title",
-  "author": "Optional Author"
+  "title": "可选标题",
+  "author": "可选作者"
 }
 ```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| markdown | string | Yes | The Markdown text to convert (max 5MB) |
-| title | string | No | Optional article title |
-| author | string | No | Optional author name |
-| template | string | No | Reserved for future use |
+| 字段 | 类型 | 必填 | 说明 |
+|-------|------|------|------|
+| markdown | string | 是 | 要转换的 Markdown 文本（最大 5MB） |
+| title | string | 否 | 可选的文章标题 |
+| author | string | 否 | 可选的作者名称 |
+| template | string | 否 | 保留字段，供将来使用 |
 
-**Response (200 OK):**
+**响应 (200 OK):**
 ```json
 {
   "success": true,
   "data": {
     "html": "<section>...</section>",
     "meta": {
-      "title": "Optional Title",
-      "author": "Optional Author",
+      "title": "可选标题",
+      "author": "可选作者",
       "timestamp": 1703920800000
     }
   }
 }
 ```
 
-**Response (400 Bad Request) - Invalid Input:**
+**响应 (400 Bad Request) - 输入无效:**
 ```json
 {
   "success": false,
@@ -78,7 +78,7 @@ Content-Type: application/json
 }
 ```
 
-**Response (413 Payload Too Large):**
+**响应 (413 Payload Too Large):**
 ```json
 {
   "success": false,
@@ -89,7 +89,7 @@ Content-Type: application/json
 }
 ```
 
-**Response (429 Too Many Requests):**
+**响应 (429 Too Many Requests):**
 ```json
 {
   "success": false,
@@ -101,7 +101,7 @@ Content-Type: application/json
 }
 ```
 
-**Response (500 Internal Server Error):**
+**响应 (500 Internal Server Error):**
 ```json
 {
   "success": false,
@@ -112,38 +112,38 @@ Content-Type: application/json
 }
 ```
 
-## Error Codes
+## 错误码
 
-| Code | HTTP Status | Description |
-|------|-------------|-------------|
-| INVALID_INPUT | 400 | Request body validation failed |
-| INVALID_JSON | 400 | Invalid JSON in request body |
-| PAYLOAD_TOO_LARGE | 413 | Request exceeds 5MB size limit |
-| RATE_LIMIT_EXCEEDED | 429 | Rate limit exceeded (100 req/min) |
-| NOT_FOUND | 404 | Endpoint not found |
-| XSS_DETECTED | 400 | Potentially unsafe content detected |
-| TEMPLATE_NOT_FOUND | 500 | Style template file missing |
-| CONVERSION_ERROR | 500 | Markdown conversion failed |
-| INTERNAL_ERROR | 500 | Internal server error |
+| 错误码 | HTTP 状态 | 说明 |
+|--------|----------|------|
+| INVALID_INPUT | 400 | 请求体验证失败 |
+| INVALID_JSON | 400 | 请求体 JSON 格式无效 |
+| PAYLOAD_TOO_LARGE | 413 | 请求超过 5MB 大小限制 |
+| RATE_LIMIT_EXCEEDED | 429 | 超出速率限制（100 次/分钟） |
+| NOT_FOUND | 404 | 接口不存在 |
+| XSS_DETECTED | 400 | 检测到潜在的不安全内容 |
+| TEMPLATE_NOT_FOUND | 500 | 样式模板文件缺失 |
+| CONVERSION_ERROR | 500 | Markdown 转换失败 |
+| INTERNAL_ERROR | 500 | 服务器内部错误 |
 
-## Rate Limiting
+## 速率限制
 
-- **Limit:** 100 requests per minute per IP address
-- **Response:** HTTP 429 with `Retry-After` header indicating seconds to wait
+- **限制:** 每个 IP 地址每分钟 100 次请求
+- **响应:** HTTP 429，附带 `Retry-After` 头部表示等待秒数
 
-## Security
+## 安全性
 
-- **XSS Protection:** All HTML output is sanitized using `sanitize-html`
-- **Input Validation:** Request size limited to 5MB
-- **Content Filtering:** Dangerous tags and attributes are removed
+- **XSS 防护:** 所有 HTML 输出均通过 `sanitize-html` 进行净化
+- **输入验证:** 请求大小限制为 5MB
+- **内容过滤:** 移除危险的标签和属性
 
-## Caching
+## 缓存
 
-- Converted content is cached for 5 minutes
-- Cache key based on input content hash
-- Automatically expires and refreshes
+- 转换结果缓存 5 分钟
+- 缓存键基于输入内容哈希生成
+- 自动过期和刷新
 
-## Example Usage
+## 使用示例
 
 ### cURL
 ```bash
@@ -181,17 +181,37 @@ data = response.json()
 print(data['data']['html'])
 ```
 
-## Running the Server
+## 运行服务
+
+### 安装依赖
+
+使用 pnpm（推荐）：
+```bash
+pnpm install
+```
+
+使用 npm：
+```bash
+npm install
+```
+
+### 启动服务
 
 ```bash
-# Install dependencies
-npm install
+# pnpm
+pnpm start
 
-# Start server
+# npm
 npm start
+```
 
-# Development mode with auto-reload
+开发模式（自动重载）：
+```bash
+# pnpm
+pnpm dev
+
+# npm
 npm run dev
 ```
 
-The server will start on port 3000 by default (configurable via `PORT` environment variable).
+服务默认运行在端口 3000（可通过 `PORT` 环境变量配置）。
