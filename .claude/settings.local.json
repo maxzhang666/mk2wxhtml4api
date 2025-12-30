@@ -21,7 +21,25 @@
       "Bash(openspec-cn list --specs)",
       "Bash(openspec-cn list --changes)",
       "Skill(openspec:proposal)",
-      "Bash(claude /logout)"
+      "Bash(claude /logout)",
+      "Bash(if [ -f \"openspec/project.md\" ])",
+      "Bash(then openspec-cn list)",
+      "Bash(else echo \"不存在openspec/project.md\")",
+      "Bash(fi)",
+      "Bash(if [ -f \"openspec/AGENTS.md\" ])",
+      "Bash(then openspec-cn list --specs)",
+      "Bash(else echo \"不存在openspec/AGENTS.md\")",
+      "Bash(if [ -d \"openspec\" ])",
+      "Bash(then ls -la openspec)",
+      "Bash(else echo \"无openspec目录\")",
+      "Bash(mkdir -p E:开源项目makedown转htmlmakedown2htmlmk2wxhtml4apiopenspecchangesadd-wechat-conversion-apispecswechat-apiapi)",
+      "Bash(openspec-cn validate add-wechat-conversion-api --strict)",
+      "Bash(openspec-cn change show add-wechat-conversion-api --json --deltas-only)",
+      "Bash(if [ -f \"openspec/changes\" ])",
+      "Bash(then ls -la openspec/changes)",
+      "Bash(else echo \"无changes目录\")",
+      "Bash(cat openspec/AGENTS.md)",
+      "Bash(echo \"无示例\")"
     ]
   }
 }
