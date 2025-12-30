@@ -34,6 +34,85 @@ pnpm dev
 
 服务默认运行在 `http://localhost:3000`
 
+## Docker 部署
+
+### 前置条件
+
+确保已安装 Docker：
+- Docker Desktop (Windows/Mac)
+- Docker Engine (Linux)
+
+### 使用 Docker 部署
+
+**1. 构建镜像**
+```bash
+docker build -t mk2wxhtml4api:latest .
+```
+
+**2. 运行容器**
+```bash
+docker run -d -p 3002:3000 --name mk2wxhtml4api mk2wxhtml4api:latest
+```
+
+服务将在 `http://localhost:3002` 上运行（主机端口 3002 映射到容器端口 3000）
+
+**3. 验证服务**
+```bash
+curl http://localhost:3002/health
+```
+
+**4. 测试转换**
+```bash
+curl -X POST http://localhost:3002/api/convert/wechat \
+  -H "Content-Type: application/json" \
+  -d '{"markdown": "# Hello\n\nThis is a test."}'
+```
+
+### 使用 Docker Compose（推荐）
+
+**启动服务**
+```bash
+docker compose up -d
+```
+
+**停止服务**
+```bash
+docker compose down
+```
+
+### 环境变量配置
+
+可通过 `-e` 参数传递环境变量：
+```bash
+docker run -d -p 3002:3000 \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  mk2wxhtml4api:latest
+```
+
+或在 `docker-compose.yml` 中配置环境变量。
+
+### 查看容器日志
+
+```bash
+# 查看运行中容器的日志
+docker logs mk2wxhtml4api
+
+# 实时跟踪日志
+docker logs -f mk2wxhtml4api
+```
+
+### 常见问题
+
+**Q: 如何修改端口？**
+A: 修改端口映射 `-p 主机端口:3000`，例如 `-p 8080:3000`
+
+**Q: 容器启动失败怎么办？**
+A: 检查容器日志 `docker logs <container_name>` 查看错误信息
+
+**Q: 如何进入容器调试？**
+A: 使用 `docker exec -it <container_name> sh` 进入容器
+
 ## API 使用
 
 ### 转换 Markdown 到微信公众号 HTML

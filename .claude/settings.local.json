@@ -83,7 +83,19 @@
       "Bash(PORT=3001 pnpm start:*)",
       "Bash(cmd /c \"taskkill /PID 36000 /F && timeout /t 1 >nul && netstat -ano | findstr :3000\")",
       "Bash(powershell.exe:*)",
-      "Bash(cmd /c \"taskkill /PID 2264 /F\")"
+      "Bash(cmd /c \"taskkill /PID 2264 /F\")",
+      "Bash(openspec-cn list:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(openspec-cn validate:*)",
+      "Bash(docker build:*)",
+      "Bash(docker info:*)",
+      "Bash(docker run:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker compose up:*)"
     ]
   }
 }
