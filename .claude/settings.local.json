@@ -95,7 +95,8 @@
       "Bash(docker stop:*)",
       "Bash(docker rm:*)",
       "Bash(docker-compose up:*)",
-      "Bash(docker compose up:*)"
+      "Bash(docker compose up:*)",
+      "Bash(docker compose:*)"
     ]
   }
 }

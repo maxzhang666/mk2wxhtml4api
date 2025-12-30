@@ -172,12 +172,24 @@ export async function convertMarkdownToWeChat(markdown, options = {}) {
 
   // Apply WeChat inline styles to HTML elements
   const styledHtml = applyWeChatStyles(sanitizedHtml);
-  
-  // Remove newlines to make HTML compact
-  const compactHtml = styledHtml.replace(/\n/g, '');
+
+  // Remove newlines to make HTML compact, but preserve newlines in <pre> tags
+  const preBlocks = [];
+  let htmlWithPlaceholders = styledHtml.replace(/<pre[^>]*>[\s\S]*?<\/pre>/g, (match) => {
+    preBlocks.push(match);
+    return `__PRE_BLOCK_${preBlocks.length - 1}__`;
+  });
+
+  // Remove newlines outside of pre blocks
+  const compactHtml = htmlWithPlaceholders.replace(/\n/g, '');
+
+  // Restore pre blocks
+  const finalHtml = compactHtml.replace(/__PRE_BLOCK_(\d+)__/g, (match, index) => {
+    return preBlocks[parseInt(index)];
+  });
 
   const result = {
-    html: compactHtml
+    html: finalHtml
   };
 
   // Cache the result
