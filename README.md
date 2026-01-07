@@ -180,6 +180,43 @@ mk2wxhtml4api/
 
 详细 API 文档请参阅 [API.md](./API.md)
 
+## CI/CD
+
+项目配置了 GitHub Actions 自动化工作流，实现以下功能：
+
+### 自动构建和发布
+
+- **触发条件**：
+  - 推送到 `main` 或 `master` 分支
+  - 创建版本标签（如 `v1.0.0`）
+  - Pull Request 到 `main` 或 `master` 分支（仅构建，不推送）
+
+- **镜像发布**：
+  - 自动构建 Docker 镜像
+  - 推送到 GitHub Container Registry (ghcr.io)
+  - 支持多架构：`linux/amd64` 和 `linux/arm64`
+
+- **镜像标签**：
+  - `latest` - 最新的主分支构建
+  - `main` 或 `master` - 分支名称
+  - `v1.0.0` - 语义化版本标签
+  - `1.0` - 主版本.次版本
+  - `1` - 主版本
+  - `main-sha-xxxxxxx` - 分支名-commit SHA
+
+### 使用发布的镜像
+
+```bash
+# 拉取最新镜像
+docker pull ghcr.io/maxzhang666/mk2wxhtml4api:latest
+
+# 运行容器
+docker run -d -p 3002:3000 --name mk2wxhtml4api ghcr.io/maxzhang666/mk2wxhtml4api:latest
+
+# 使用特定版本
+docker pull ghcr.io/maxzhang666/mk2wxhtml4api:v1.0.0
+```
+
 ## 开发指南
 
 项目使用 OpenSpec 进行规范驱动开发。查看 `openspec/` 目录了解开发规范。
